@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema({
-  imageUrl: String,
+  imageURL: [String],
   name: String,
   price: {
-    small: Number,
-    medium: Number,
-    large: Number,
+    small: String,
+    medium: String,
+    large: String,
   },
   description: String,
   categoryId: String,
