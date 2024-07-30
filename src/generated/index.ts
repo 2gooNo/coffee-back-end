@@ -50,9 +50,9 @@ export type MutationAddUserArgs = {
 
 export type Price = {
   __typename?: 'Price';
-  large?: Maybe<Scalars['Int']['output']>;
-  medium?: Maybe<Scalars['Int']['output']>;
-  small?: Maybe<Scalars['Int']['output']>;
+  large?: Maybe<Scalars['String']['output']>;
+  medium?: Maybe<Scalars['String']['output']>;
+  small?: Maybe<Scalars['String']['output']>;
 };
 
 export type Product = {
@@ -69,12 +69,17 @@ export type Query = {
   getAllCategory?: Maybe<Array<Category>>;
   getAllProduct?: Maybe<Array<Product>>;
   getAllUser?: Maybe<Array<User>>;
-  getOneUser?: Maybe<Scalars['String']['output']>;
+  logIn?: Maybe<Token>;
 };
 
 
-export type QueryGetOneUserArgs = {
-  input?: InputMaybe<GetOneUserInput>;
+export type QueryLogInArgs = {
+  input?: InputMaybe<LoginInput>;
+};
+
+export type Token = {
+  __typename?: 'Token';
+  token?: Maybe<Scalars['String']['output']>;
 };
 
 export type User = {
@@ -106,7 +111,7 @@ export type CreateUserInput = {
   password?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type GetOneUserInput = {
+export type LoginInput = {
   email?: InputMaybe<Scalars['String']['input']>;
   password?: InputMaybe<Scalars['String']['input']>;
 };

@@ -12,10 +12,12 @@
   "dependencies": {
     "@apollo/client": "^3.10.8",
     "@apollo/server": "^4.10.4",
+    "@apollo/subgraph": "^2.8.3",
     "@as-integrations/next": "^3.0.0",
     "@graphql-codegen/cli": "^5.0.2",
     "@graphql-codegen/typescript-react-apollo": "^4.3.0",
     "@graphql-codegen/typescript-react-query": "^6.1.0",
+    "apollo-server-cloud-functions": "^3.13.0",
     "bcrypt": "^5.1.1",
     "cloudinary": "^2.3.0",
     "formidable-serverless": "^1.1.1",

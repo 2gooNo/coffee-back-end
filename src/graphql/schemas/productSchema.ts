@@ -2,9 +2,9 @@ import { gql } from "graphql-tag";
 
 export const productType = gql`
   type Price {
-    small: Int
-    medium: Int
-    large: Int
+    small: String
+    medium: String
+    large: String
   }
   input InputPrice {
     small: String

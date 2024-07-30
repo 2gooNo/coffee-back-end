@@ -1,6 +1,6 @@
 import { CreateUserInput } from "@/generated";
 import { UserModel } from "@/models/userModel";
-import { GetOneUserInput } from "@/generated";
+import { LoginInput } from "@/generated";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -34,15 +34,14 @@ export const getAll = async () => {
     return err;
   }
 };
-export const getOne = async (input: GetOneUserInput) => {
-  // console.log(input);
-
+export const logIn = async (input: LoginInput) => {
   try {
     if (typeof input.password === "string") {
       const oneUser = await UserModel.findOne({ email: input?.email });
       console.log("oneUser", oneUser);
-      console.log("input?.password=", input?.password);
-      const match = await bcrypt.compare(input.password, oneUser.password);
+
+      const match = await bcrypt.compare(input?.password, oneUser?.password);
+      console.log("match", match);
 
       if (match) {
         const token = jwt.sign(
@@ -52,6 +51,8 @@ export const getOne = async (input: GetOneUserInput) => {
             expiresIn: "72h",
           }
         );
+        console.log("token", token);
+
         return token;
       } else {
         return new Error("Password is wrong");

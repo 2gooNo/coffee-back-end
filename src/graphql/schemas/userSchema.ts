@@ -15,13 +15,16 @@ export const userType = gql`
     password: String
     avatar: String
   }
-  input getOneUserInput {
+  input loginInput {
     email: String
     password: String
   }
+  type Token {
+    token: String
+  }
   type Query {
     getAllUser: [User!]
-    getOneUser(input: getOneUserInput): String
+    logIn(input: loginInput): Token
   }
 
   type Mutation {

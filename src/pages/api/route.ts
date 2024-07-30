@@ -1,21 +1,31 @@
-import { startServerAndCreateNextHandler } from "@as-integrations/next";
-import { ApolloServer } from "@apollo/server";
-import { NextRequest } from "next/server";
+import { ApolloServer } from "apollo-server-cloud-functions";
 import { resolvers } from "@/graphql/resolvers";
 import { typeDefs } from "@/graphql/schemas";
 import connectTodoDB from "@/utils/dbConnection";
-import allowCors from "@/utils/cors";
 
 connectTodoDB();
-console.log(resolvers);
+import { buildSubgraphSchema } from "@apollo/subgraph";
+import { InMemoryLRUCache } from "@apollo/utils.keyvaluecache";
+console.log("resolvers", resolvers);
+
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+  schema: buildSubgraphSchema({ typeDefs, resolvers }),
+  cache: new InMemoryLRUCache(),
+  csrfPrevention: false,
   introspection: true,
+  context: ({ req, res }: { req: Request; res: Response }) => ({
+    headers: req.headers,
+    req,
+    res,
+  }),
 });
 
-const handler = startServerAndCreateNextHandler<NextRequest>(server, {
-  context: async (req) => ({ req }),
-});
+export const config = {
+  api: {
+    bodyParser: false,
+    externalResolver: true,
+  },
+};
 
-export default allowCors(handler);
+const graphqlHandler = server.createHandler();
+export default graphqlHandler;
